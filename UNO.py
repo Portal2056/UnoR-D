@@ -1,5 +1,6 @@
 from random import *
 import time
+print("test")
 class color:
    def __init__(self,color,deck2=0):
        self.zero = color + '0'
