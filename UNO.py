@@ -111,3 +111,4 @@ gamestate = "in play"
 while gamestate == "in play":
     deck.drawCard()
     print(topCard)
+    
