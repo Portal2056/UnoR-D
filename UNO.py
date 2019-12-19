@@ -43,12 +43,8 @@ bot1_deck = []
 bot2_deck = []
 bot3_deck = []
 
-rSort = []
-ySort = []
-gSort = []
-bSort = []
-wSort = []
 sortedDeck = []
+playerOrder = ["player1","bot1","bot2","bot3"]
 topCard = 'blank'
 
 class deck:
@@ -57,22 +53,22 @@ class deck:
 
     def make_deck(self):
         for i in range(4):
-            if i == 1:
+            if i == 0:
                 for j in range(7):
                     card = randint(1,len(deck.deck)-1)
                     player1_deck.append(self.deck[card])
                     self.deck.__delitem__(card)
-            elif i == 2:
+            elif i == 1:
                 for j in range(7):
                     card = randint(1,len(deck.deck)-1)
                     bot1_deck.append(self.deck[card])
                     self.deck.__delitem__(card)
-            elif i == 3:
+            elif i == 2:
                 for j in range(7):
                     card = randint(1,len(deck.deck)-1)
                     bot2_deck.append(self.deck[card])
                     self.deck.__delitem__(card)
-            elif i == 4:
+            elif i == 3:
                 for j in range(7):
                     card = randint(1,len(deck.deck)-1)
                     bot3_deck.append(self.deck[card])
@@ -85,8 +81,12 @@ class deck:
         self.deck.__delitem__(card)
 
 
-
 def sortdeck(deck):
+    rSort = []
+    ySort = []
+    gSort = []
+    bSort = []
+    wSort = []
     for i, card in enumerate(deck):
         if card.startswith('R_'):
             rSort.append(card)
@@ -102,13 +102,18 @@ def sortdeck(deck):
     sortedDeck = rSort + ySort + gSort + bSort + wSort
     print(sortedDeck, 'sorted')
 
+
 deck = deck()
 deck.make_deck()
 sortdeck(player1_deck)
+sortdeck(bot1_deck)
+sortdeck(bot2_deck)
+sortdeck(bot3_deck)
 
 gamestate = "in play"
 
-while gamestate == "in play":
-    deck.drawCard()
-    print(topCard)
-    
+
+# while gamestate == "in play":
+#     deck.drawCard()
+#     print(topCard)
+#
