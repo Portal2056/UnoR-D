@@ -1,8 +1,9 @@
 from random import *
 import time
-print("test")
+
+
 class color:
-   def __init__(self,color,deck2=0):
+   def __init__(self, color, deck2=0):
        self.zero = color + '0'
        self.one = color + '1'
        self.two = color + '2'
@@ -88,7 +89,21 @@ def sortdeck(deck):
     gSort = []
     bSort = []
     wSort = []
-    for i, card in enumerate(deck):
+    num_sorted_deck = []
+
+    #Sort by number
+    for i in range(10):
+        for card in deck:
+            if card.endswith('_' + str(i)):
+                num_sorted_deck.append(card)
+    card_types = ['cc', 'd2', 'd4', 'rev', 'skip']
+    for i in range(5):
+        for card in deck:
+            if card.endswith(card_types[i]):
+                num_sorted_deck.append(card)
+
+    # Goes through and sorts by color
+    for i, card in enumerate(num_sorted_deck):
         if card.startswith('R_'):
             rSort.append(card)
         if card.startswith('Y_'):
@@ -107,14 +122,10 @@ def sortdeck(deck):
 deck = deck()
 deck.make_deck()
 sortdeck(player1_deck)
-sortdeck(bot1_deck)
-sortdeck(bot2_deck)
-sortdeck(bot3_deck)
 
 gamestate = "in play"
 
-
-# while gamestate == "in play":
-#     deck.drawCard()
-#     print(topCard)
-#
+while gamestate == "in play":
+    # deck.drawCard()
+    # print(topCard)
+    pass
