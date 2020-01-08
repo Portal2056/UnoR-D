@@ -1,7 +1,6 @@
 from random import *
 import time
 
-
 class color:
    def __init__(self, color, deck2=0):
        self.zero = color + '0'
@@ -29,6 +28,7 @@ class wild:
        self.d4 = 'd4'
        self.cc = 'cc'
        self.list = [self.d4, self.cc] * 4
+
 
 r = color(color='R_')
 y = color(color='Y_')
@@ -96,6 +96,7 @@ def sortdeck(deck):
         for card in deck:
             if card.endswith('_' + str(i)):
                 num_sorted_deck.append(card)
+    global card_types
     card_types = ['cc', 'd2', 'd4', 'rev', 'skip']
     for i in range(5):
         for card in deck:
@@ -116,14 +117,82 @@ def sortdeck(deck):
             wSort.append(card)
     global sortedDeck
     sortedDeck = rSort + ySort + gSort + bSort + wSort
-    print(sortedDeck, 'sorted')
+    print(sortedDeck)
 
+def cardPlace(deck):
+    if playerOrder[turn] == "player1":
+        global cardChoice
+        cardChoice = input("What card do you want to play? ")
+        if cardChoice in deck:
+            print("You placed " + str(cardChoice) + ".")
+            deck.remove(cardChoice)
+            topCard = cardChoice
+
+validCardList = []
+
+def validCardCheck(deck):
+    validCardList = []
+    for card in deck:
+        if card.startswith(topCard[0]) or card.endswith(topCard[-1]) or card.endswith('cc') or card.endswith('d4'):
+            validCardList.append(card)
+
+    if validCardList == []:
+        print("You have no playable cards in your hand. You are forced to draw a card from the deck.")
+    else:
+        print("Valid cards in your deck are " + str(validCardList) + ".")
+
+def addCard(deck):
+    self.deck.remove(card)
+    deck.append(card)
+
+global stackCount
+stackCount = 0
+
+def specialCardRules(deck):
+    for card in deck:
+
+        if card.endswith('rev'):
+            playerOrder.reverse()
+
+        elif card.endswith('skip'):
+            if playerOrder[turn] == 3:
+                playerOrder[turn] = 1
+            else:
+                playerOrder[turn] += 1
+
+        elif card.endswith('d2'):
+            for card in ((playerOrder[turn] + 1) % 4):
+                if card.endswith('d2') in deck:
+                    validCardList = []
+                    validCardList.append(card)
+                    if cardChoice in validCardList:
+                        stackCount += 2
+                    else:
+                        playerOrder = ((playerOrder + 1) % 4)
+                        for d in range(stackCount):
+                            pass
+
+        elif card.endswith('d4'):
+            for card in ((playerOrder[turn] + 1) % 4):
+                if card.endswith('d4'):
+                    stackCount += 4
+                    for d in range(stackCount):
+                        pass
+
+        elif card.endswith('cc'):
+            pass
 
 deck = deck()
 deck.make_deck()
 sortdeck(player1_deck)
-
+turn = 0
 gamestate = "in play"
+
+topCard = 'Y_skip'
+
+print("The current top card is a " + str(topCard) + ".")
+
+validCardCheck(player1_deck)
 
 while gamestate == "in play":
     # deck.drawCard()
