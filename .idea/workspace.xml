@@ -27,7 +27,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RunManager" selected="Python.UNO">
     <configuration name="UNO" type="PythonConfigurationType" factoryName="Python" temporary="true">
@@ -138,25 +138,45 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="803" y="410" key="#com.jetbrains.python.refactoring.move.PyMoveModuleMembersDialog/1920.-367.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1578414431880" />
-    <state width="1899" height="175" key="GridCell.Tab.0.bottom" timestamp="1580229966722">
+    <state width="1899" height="215" key="GridCell.Tab.0.bottom" timestamp="1580921029770">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="175" key="GridCell.Tab.0.bottom/1920.-367.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1580229966722" />
-    <state width="1899" height="175" key="GridCell.Tab.0.center" timestamp="1580229966722">
+    <state width="1899" height="215" key="GridCell.Tab.0.bottom/1920.-367.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1580921029770" />
+    <state width="1899" height="215" key="GridCell.Tab.0.center" timestamp="1580921029770">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="175" key="GridCell.Tab.0.center/1920.-367.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1580229966722" />
-    <state width="1899" height="175" key="GridCell.Tab.0.left" timestamp="1580229966722">
+    <state width="1899" height="215" key="GridCell.Tab.0.center/1920.-367.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1580921029770" />
+    <state width="1899" height="215" key="GridCell.Tab.0.left" timestamp="1580921029770">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="175" key="GridCell.Tab.0.left/1920.-367.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1580229966722" />
-    <state width="1899" height="175" key="GridCell.Tab.0.right" timestamp="1580229966722">
+    <state width="1899" height="215" key="GridCell.Tab.0.left/1920.-367.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1580921029770" />
+    <state width="1899" height="215" key="GridCell.Tab.0.right" timestamp="1580921029770">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="175" key="GridCell.Tab.0.right/1920.-367.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1580229966722" />
-    <state x="461" y="162" key="SettingsEditor" timestamp="1576855905034">
+    <state width="1899" height="215" key="GridCell.Tab.0.right/1920.-367.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1580921029770" />
+    <state width="1899" height="348" key="GridCell.Tab.1.bottom" timestamp="1580920564806">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="461" y="162" key="SettingsEditor/1920.-367.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1576855905034" />
+    <state width="1899" height="348" key="GridCell.Tab.1.bottom/1920.-367.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1580920564806" />
+    <state width="1899" height="348" key="GridCell.Tab.1.center" timestamp="1580920564806">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="348" key="GridCell.Tab.1.center/1920.-367.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1580920564806" />
+    <state width="1899" height="348" key="GridCell.Tab.1.left" timestamp="1580920564806">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="348" key="GridCell.Tab.1.left/1920.-367.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1580920564806" />
+    <state width="1899" height="348" key="GridCell.Tab.1.right" timestamp="1580920564806">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1899" height="348" key="GridCell.Tab.1.right/1920.-367.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1580920564806" />
+    <state x="461" y="162" key="SettingsEditor" timestamp="1580830770691">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="162" key="SettingsEditor/1920.-367.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1580830770691" />
+    <state x="615" y="159" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1580832460973">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="615" y="159" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/1920.-367.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1580832460973" />
   </component>
 </project>

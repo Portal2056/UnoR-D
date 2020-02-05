@@ -1,5 +1,5 @@
 from random import *
-
+import time
 # Creates numbers and basic identities of specal cards
 class color:
    def __init__(self, color, deck2=0):
@@ -42,13 +42,9 @@ b2 = color(color='B_',deck2=1)
 wild = wild()
 
 # Defines individual player hands
-player1_deck = []
-bot1_deck = []
-bot2_deck = []
-bot3_deck = []
+player1_deck, bot1_deck, bot2_deck, bot3_deck, sortedDeck = [], [], [], [], []
 
 # Handles sorting of decks and player order in-game
-sortedDeck = []
 playerOrder = ["Player 1", "Bot 1", "Bot 2", "Bot 3"]
 turn_deck = [player1_deck, bot1_deck, bot2_deck, bot3_deck]
 
@@ -93,19 +89,13 @@ class deck:
 
 # Function to sort a deck, namely "player1_deck" due to it being the only visible hand
 def sortdeck(deck):
-    rSort = []
-    ySort = []
-    gSort = []
-    bSort = []
-    wSort = []
-    num_sorted_deck = []
-
+    global card_types
+    rSort, ySort, gSort, bSort, wSort, num_sorted_deck = [], [], [], [], [], []
     #Sort by number
     for i in range(10):
         for card in deck:
             if card.endswith('_' + str(i)):
                 num_sorted_deck.append(card)
-    global card_types
     card_types = ['cc', 'dT', 'dF', 'rev', 'skip']
     for i in range(5):
         for card in deck:
@@ -129,81 +119,69 @@ def sortdeck(deck):
     print(sortedDeck)
 
 # Creates a function to place cards
-def cardPlace(deck):
-    global topCard
-    if playerOrder[turn] == "Player 1":
-        global cardChoice
+def cardPlace():
+    global ph, topCard, cardChoice, player1_deck
+    cardChoice = input("What card do you want to play? ")
+    while cardChoice not in validCardList:
         cardChoice = input("What card do you want to play? ")
-        while cardChoice not in deck:
-            cardChoice = input("What card do you want to play? ")
-        if cardChoice in deck:
-            print("You placed " + str(cardChoice) + ".")
-            deck.remove(cardChoice)
-            topCard = cardChoice
-    else:
-        validCardCheck(deck)
+    if cardChoice in validCardList:
+        print("You placed " + str(cardChoice) + ".")
+        player1_deck.remove(cardChoice)
+        topCard = cardChoice
+
 
 # Checks for valid (playable/legal) cards during a player turn
 validCardList = []
 
-def validCardCheck(deck):
-    global turn
-    global card
-    global topCard
+def validCardCheck(hand, bot=''):
+    global turn, card, topCard, ph, validCardList
     validCardList = []
-    for card in deck:
+    for card in hand:
         if card.startswith(topCard[0]) or card.endswith(topCard[-1]) or card.endswith('cc') or card.endswith('dF'):
             validCardList.append(card)
     if playerOrder[turn] == "Player 1":
-        if validCardList == []:
+        if validCardList == [] and player1_deck != []:
             print("You have no playable cards in your hand. You are forced to draw a card from the deck.")
             addCard(player1_deck)
             sortdeck(player1_deck)
+            for card in hand:
+                if card.startswith(topCard[0]) or card.endswith(topCard[-1]) or card.endswith('cc') or card.endswith('dF'):
+                    validCardList.append(card)
+            if validCardList != []:
+                print("Valid cards in your deck are {}.".format(validCardList))
+                cardPlace()
         else:
-            print("Valid cards in your deck are " + str(validCardList) + ".")
-    elif playerOrder[turn] == "Bot 1":
+            print("Valid cards in your deck are {}.".format(validCardList))
+    else:
         if validCardList == []:
-            print("Bot 1 had no playable cards and was forced to draw.")
-            addCard(deck)
+            print("{} had no playable cards and was forced to draw.".format(bot))
+            addCard(hand)
             print(str(playerOrder[(turn + 1) % 4]) + ", it's your turn!")
+            turn = (turn + 1) % 4
+
         else:
             pickRandCard = randint(0,len(validCardList)-1)
-            deck.remove(deck[pickRandCard])
-            topCard = deck[pickRandCard]
-    elif playerOrder[turn] == "Bot 2":
-        if validCardList == []:
-            print("Bot 2 had no playable cards and was forced to draw.")
-            addCard(deck)
-            print(str(playerOrder[(turn + 1) % 4]) + ", it's your turn!")
-        else:
-            pickRandCard = randint(0,len(validCardList))
-            deck.remove(deck[pickRandCard])
-            topCard = deck[pickRandCard]
-    elif playerOrder[turn] == "Bot 3":
-        if validCardList == []:
-            print("Bot 3 had no playable cards and was forced to draw.")
-            addCard(deck)
-            print(str(playerOrder[(turn + 1) % 4]) + ", it's your turn!")
-        else:
-            pickRandCard = randint(0,len(validCardList))
-            deck.remove(deck[pickRandCard])
-            topCard = deck[pickRandCard]
+            topCard = validCardList[pickRandCard]
+            hand.remove(validCardList[pickRandCard])
+    ph = topCard
 
 # Adds card to a given deck, removing it from the mainDeck's list in doing so
 def addCard(deck1):
-    global card
-    card = randint(1, len(deck.deck) - 1)
+    card = randint(0, len(deck.deck) - 1)
+    print(card, 'card')
+    print(deck.deck[card], 'deck.deck[card]')
+    print(deck.deck, 'deck.deck')
     deck.deck.remove(deck.deck[card])
-
     deck1.append(deck.deck[card])
 
 stackCount = 0
 
-# Special card funcs
 def revDeck(deck):
+    global turn
     if topCard.endswith('rev'):
         playerOrder.reverse()
         turn_deck.reverse()
+        turn = (turn + 1) % 4
 
 def skipCard():
     global turn
@@ -214,65 +192,49 @@ def skipCard():
             turn += 1
 
 def drawTwo(deck):
-    global stackCount
-    global card
-    global topCard
-    global turn
-    global deckList
+    currentDeck = 0
     deckList = [player1_deck, bot1_deck, bot2_deck, bot3_deck]
-    while topCard == 'dT':
-        for card in deck:
-            if card.endswith('dT'):
-                deck.remove(card)
-                stackCount += 2
-                turn = (turn + 1) % 4
-                drawTwo(deckList[turn])
-    if 'dT' not in deck:
-        for d in range(stackCount):
-            addCard(deck)
-    print(str(playerOrder[turn]) + " has to draw " + str(stackCount) + " cards.")
+    turntemp = (turn + 1) % 4
+    if deck == player1_deck:
+        currentDeck = 0
+    elif deck == bot1_deck:
+        currentDeck = 1
+    elif deck == bot2_deck:
+        currentDeck = 2
+    elif deck == bot2_deck:
+        currentDeck = 3
+    for d in range(2):
+        addCard(deck)
+    print(str(playerOrder[turntemp]) + " has to draw 2 cards.")
+    print(len(deckList[currentDeck]) + 1, 'length of ' + str(playerOrder[turntemp]) + '\'s deck')
 
 def drawFour(deck):
-    global card
-    global stackCount
-    global topCard
-    global turn
-    global deckList
-    deckList = [player1_deck, bot1_deck, bot2_deck, bot3_deck]
-    while topCard == 'dF':
-        for card in deck:
-            if card.endswith('dF'):
-                deck.remove(card)
-                stackCount += 4
-                turn = (turn + 1) % 4
-                drawTwo(deckList[turn])
-    if 'dF' not in deck:
-        for d in range(stackCount):
-            addCard(deck)
-    print(str(playerOrder[turn]) + " has to draw " + str(stackCount) + " cards.")
+    global card, topCard, turn
+    turntemp = (turn + 1) % 4
+    for d in range(4):
+        addCard(turn_deck[turntemp])
+    print(str(playerOrder[turntemp]) + " has to draw 4 cards.")
+    changeColor(deck)
 
-def changeColor():
-    global card
-    global colorList
-    global colorChoice
-    global deck
-    global topCard
-    global turn
+def changeColor(deck_player):
+    global card, colorList, colorChoice, topCard, turn
     if playerOrder[turn] == "Player 1":
-        if topCard.endswith('cc'):
-            colorList = ['red','yellow','green','blue']
+        if topCard.endswith('cc') or topCard.endswith('dF'):
+            colorList = ['RED', 'YELLOW', 'GREEN', 'BLUE']
             validCardList = []
             colorChoice = input("What color do you want to choose? ")
-            colorChoice.upper()
+            colorChoice = colorChoice.upper()
             while colorChoice not in colorList:
                 colorChoice = input("What color do you want to choose? ")
-            # for card in deck:
-            #     if card.startswith(colorChoice[0]):
-            #         validCardList.append(card)
+                colorChoice = colorChoice.upper()
+            for card in deck_player:
+                if card.startswith(colorChoice[0]):
+                    validCardList.append(card)
         topCard = colorChoice[0]
+        ph = topCard
     else:
         colorList = ['R', 'Y', 'G', 'B']
-        randColor = colorList[randint(0,3)]
+        randColor = randint(0,3)
         if colorList[randColor] == 'R':
             print(playerOrder[turn] + " chose Red.")
         elif colorList[randColor] == "Y":
@@ -290,52 +252,64 @@ topCard = deck.deck[card]
 gamestate = "in play"
 
 def cycleMainDeck():
-    global topCard
-    global mainDeck
+    global topCard, mainDeck
     newDeck = []
     newDeck.append(topCard)
     if len(deck.deck) == 0:
         deck.deck = newDeck
 
-def playerTurn():
+def playerTurn(player):
     global turn
-    if playerOrder[turn] == "Player 1":
+    if player == "Player 1":
         sortdeck(player1_deck)
         validCardCheck(player1_deck)
-        cardPlace(player1_deck)
-    if playerOrder[turn] == "Bot 1":
-        validCardCheck(bot1_deck)
-        cardPlace(bot1_deck)
-        print("Bot 1 placed a " + str(ph))
-    if playerOrder[turn] == "Bot 2":
-        validCardCheck(bot2_deck)
-        cardPlace(bot2_deck)
-        print("Bot 2 placed a " + str(ph))
-    if playerOrder[turn] == "Bot 3":
-        validCardCheck(bot3_deck)
-        cardPlace(bot3_deck)
-        print("Bot 3 placed a " + str(ph))
+        cardPlace()
+    else:
+        if player == "Bot 1":
+            validCardCheck(bot1_deck, player)
+        elif player == "Bot 2":
+            validCardCheck(bot2_deck, player)
+        elif player == "Bot 3":
+            validCardCheck(bot3_deck, player)
+        print("{} placed a {}".format(player, ph))
+def winTest():
+    global turn_deck
+    for player in turn_deck:
+        if player == player1_deck:
+            if player1_deck == []:
+                print("You win!")
+                break
+        if player == bot1_deck:
+            if bot1_deck == []:
+                print("Bot 1 wins!")
+                break
+        if player == bot2_deck:
+            if bot2_deck == []:
+                print("Bot 2 wins!")
+                break
+        if player == bot3_deck:
+            if bot3_deck == []:
+                print("Bot 3 wins!")
+                break
 
 deck.drawCard()
 print("Starting card is a " + str(topCard))
 turn = 0
 # Handles gameplay
 while gamestate == "in play":
-    playerTurn()
-    ph = topCard
+    playerTurn(playerOrder[turn])
     if topCard == 'dF':
-        turn = (turn + 1) % 4
-        stackCount = 4
         drawFour(turn_deck[turn])
     elif topCard.endswith('dT'):
-        turn = (turn + 1) % 4
-        stackCount = 2
         drawTwo(turn_deck[turn])
     elif topCard.endswith('rev'):
         revDeck(playerOrder)
     elif topCard.endswith('skip'):
         skipCard()
     elif topCard == 'cc':
-        changeColor()
+        changeColor(turn_deck[turn])
+    print("Turn is increasing by 1")
     turn = (turn + 1) % 4
-
+    cycleMainDeck()
+    #time.sleep(1)
+    winTest()
