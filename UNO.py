@@ -1,7 +1,8 @@
 from random import *
+from colorama import Fore, Style
 import time
 # Creates numbers and basic identities of specal cards
-sleepTime = int(input("Enter a time scale: "))
+sleepTime = float(input("Enter a time scale: "))
 class color:
    def __init__(self, color, deck2=0):
        self.zero = color + '0'
@@ -118,7 +119,7 @@ def sortdeck(deck, print_deck=0):
     global sortedDeck
     sortedDeck = rSort + ySort + gSort + bSort + wSort
     if print_deck == 0:
-        print('Your deck is: {}'.format(sortedDeck))
+        printCards(sortedDeck, 'deck_list')
         time.sleep(.5 * sleepTime)
 
 # Creates a function to place cards
@@ -131,7 +132,7 @@ def cardPlace():
             cardChoice = input("What card do you want to play? ")
             print(validCardList)
     if cardChoice in validCardList:
-        print("You placed a " + str(cardChoice) + ".")
+        printCard(cardChoice, 'cardChoiceP')
         time.sleep(.2 * sleepTime)
         player1_deck.remove(cardChoice)
         topCard = cardChoice
@@ -157,7 +158,7 @@ def validCardCheck(hand, bot=''):
                 if card.startswith(topCard[0]) or card.endswith(topCard[-1]) or card.endswith('cc') or card.endswith('dF'):
                     validCardList.append(card)
             if validCardList != []:
-                print("Valid cards in your deck are {}.".format(validCardList))
+                printCards(validCardList, 'validCardList')
                 time.sleep(.5 * sleepTime)
                 cardPlace()
             else:
@@ -165,7 +166,7 @@ def validCardCheck(hand, bot=''):
                 time.sleep(.2 * sleepTime)
 
         else:
-            print("Valid cards in your deck are {}.".format(validCardList))
+            printCards(validCardList, 'validCardList')
             time.sleep(.2 * sleepTime)
     else:
         if validCardList == []:
@@ -260,6 +261,74 @@ card = randint(1, (len(deck.deck) - 1))
 topCard = deck.deck[card]
 gamestate = "in play"
 
+def printCard(card, print_type='', player=''):
+    if print_type == 'StartingCard':
+        print('Starting card is a ', end='')
+    elif print_type == 'TopCard':
+        print('Top card is a ', end='')
+    elif print_type == 'cardChoiceP':
+        print('You placed a ', end='' )
+    elif print_type == 'cardChoiceB':
+        print('{} chose a '.format(player), end='')
+
+    if card.startswith('R'):
+        print(Fore.RED + card, end='')
+    elif card.startswith('Y'):
+        print(Fore.YELLOW + card, end='')
+
+    elif card.startswith('G'):
+        print(Fore.GREEN + card, end='')
+
+    elif card.startswith('B'):
+        print(Fore.BLUE + card, end='')
+
+    elif card.startswith('cc') or card.startswith('dF'):
+        print(Fore.WHITE + card)
+
+    print(Style.RESET_ALL)
+
+def printCards(list, print_type=''):
+
+    if print_type == 'deck_list':
+        print("Your deck is: ", end='')
+    elif print_type == 'validCardList':
+        print("Valid cards in your deck are: ", end='')
+    for card in list:
+        if card.startswith('R'):
+            print(Fore.RED + card, end='')
+            if card == list[-1]:
+                print('')
+            else:
+                print(Fore.WHITE + ', ', end='')
+
+        elif card.startswith('Y'):
+            print(Fore.YELLOW + card, end='')
+            if card == list[-1]:
+                print('')
+            else:
+                print(Fore.WHITE + ', ', end='')
+
+        elif card.startswith('G'):
+            print(Fore.GREEN + card, end='')
+            if card == list[-1]:
+                print('')
+            else:
+                print(Fore.WHITE + ', ', end='')
+
+        elif card.startswith('B'):
+            print(Fore.BLUE + card, end='')
+            if card == list[-1]:
+                print('')
+            else:
+                print(Fore.WHITE + ', ', end='')
+
+        elif card.startswith('cc') or card.startswith('dF'):
+            if card == list[-1]:
+                print(Fore.WHITE + card)
+            else:
+                print(Fore.WHITE + card + ', ', end='')
+    print(Style.RESET_ALL)
+
 def cycleMainDeck():
     global topCard, mainDeck
     newDeck = []
@@ -282,7 +351,7 @@ def playerTurn(player):
         elif player == "Bot 3":
             validCardCheck(bot3_deck, player)
         if validCardList != []:
-            print("{} placed a {}".format(player, ph))
+            printCard(ph, 'cardChoiceB', player)
             time.sleep(.2 * sleepTime)
 
 def winTest():
@@ -308,7 +377,8 @@ def winTest():
 botDeckList = [bot1_deck, bot2_deck, bot3_deck]
 botNames = ['Bot 1', 'Bot 2', 'Bot 3']
 deck.drawCard()
-print("Starting card is a " + str(topCard))
+
+printCard(topCard, 'StartingCard')
 time.sleep(.5 * sleepTime)
 turn = 0
 # Handles gameplay
