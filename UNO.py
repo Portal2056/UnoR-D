@@ -251,7 +251,19 @@ def changeColor(deck_player):
     else:
         colorList = ['RED', 'YELLOW', 'GREEN', 'BLUE']
         randColor = randint(0,3)
-        print(playerOrder[turn] + " chose {}".format(colorList[randColor].capitalize()))
+        if colorList[randColor] == 'RED':
+            print(playerOrder[turn] + ' chose ',end='')
+            print(Fore.RED + 'Red',end='')
+        elif colorList[randColor] == 'YELLOW':
+            print(playerOrder[turn] + ' chose ',end='')
+            print(Fore.YELLOW + 'Yellow',end='')
+        elif colorList[randColor] == 'GREEN':
+            print(playerOrder[turn] + ' chose ',end='')
+            print(Fore.GREEN + 'Green',end='')
+        elif colorList[randColor] == 'BLUE':
+            print(playerOrder[turn] + ' chose ',end='')
+            print(Fore.BLUE + 'Blue',end='')
+        print(Style.RESET_ALL)
         time.sleep(.2 * sleepTime)
         topCard = colorList[randColor]
 # Initial setup after deck creation
@@ -275,13 +287,10 @@ def printCard(card, print_type='', player=''):
         print(Fore.RED + card, end='')
     elif card.startswith('Y'):
         print(Fore.YELLOW + card, end='')
-
     elif card.startswith('G'):
         print(Fore.GREEN + card, end='')
-
     elif card.startswith('B'):
-        print(Fore.BLUE + card, end='')
-
+        print(Fore.BLUE + card, end='') 
     elif card.startswith('cc') or card.startswith('dF'):
         print(Fore.WHITE + card)
 
@@ -384,7 +393,21 @@ turn = 0
 # Handles gameplay
 while gamestate == "in play":
     for counter, bot in enumerate(botNames):
-        print('{} has {} cards.'.format(bot, len(botDeckList[counter])), end=' ')
+        if len(botDeckList[counter]) >= 3:
+            print('{} has '.format(bot),end='')
+            print(Fore.GREEN + str(len(botDeckList[counter])),end='')
+            print(Style.RESET_ALL,end=' ')
+            print('cards.', end=' ')
+        elif len(botDeckList[counter]) == 2:
+            print('{} has '.format(bot), end='')
+            print(Fore.YELLOW + '2',end='')
+            print(Style.RESET_ALL,end=' ')
+            print('cards.', end=' ')
+        else:
+            print('{} has '.format(bot), end='')
+            print(Fore.RED + '1',end='')
+            print(Style.RESET_ALL,end=' ')
+            print('card.', end=' ')
         time.sleep(.5 * sleepTime)
     time.sleep(.5 * sleepTime)
     print('')
