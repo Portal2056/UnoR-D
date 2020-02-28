@@ -170,7 +170,7 @@ def validCardCheck(hand, bot=''):
             time.sleep(.2 * sleepTime)
     else:
         if validCardList == []:
-            print("{} had no playable cards ad was forced to draw.".format(bot))
+            print("{} had no playable cards and was forced to draw.".format(bot))
             time.sleep(.2 * sleepTime)
             addCard(hand)
             if reversed:
@@ -290,7 +290,7 @@ def printCard(card, print_type='', player=''):
     elif card.startswith('G'):
         print(Fore.GREEN + card, end='')
     elif card.startswith('B'):
-        print(Fore.BLUE + card, end='') 
+        print(Fore.BLUE + card, end='')
     elif card.startswith('cc') or card.startswith('dF'):
         print(Fore.WHITE + card)
 
