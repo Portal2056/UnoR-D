@@ -386,18 +386,22 @@ def winTest():
         if player == player1_deck:
             if player1_deck == []:
                 print("You win!")
+                input('')
                 exit()
         if player == bot1_deck:
             if bot1_deck == []:
                 print("Bot 1 wins!")
+                input('')
                 exit()
         if player == bot2_deck:
             if bot2_deck == []:
                 print("Bot 2 wins!")
+                input('')
                 exit()
         if player == bot3_deck:
             if bot3_deck == []:
                 print("Bot 3 wins!")
+                input('')
                 exit()
 
 botDeckList = [bot1_deck, bot2_deck, bot3_deck]
