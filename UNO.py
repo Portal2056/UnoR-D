@@ -2,6 +2,19 @@ from random import *
 from colorama import Fore, Style
 import time
 # Creates numbers and basic identities of specal cards
+print('\nThis is an UNO game created by ',end='')
+print(Fore.GREEN + 'Corey Herubin',end='')
+print(Style.RESET_ALL,end='')
+print(' and ',end='')
+print(Fore.BLUE + 'Zane Rickert',end='')
+print(Style.RESET_ALL + '.')
+print('We created this during Research and Development 2020.\n')
+time.sleep(1)
+print(Fore.RED + '* NOTE *\n')
+print('Time Scale is a multiplier between 0 to infinity.')
+print('It is used for the wait between print statements.')
+print('One is the default and recommended value.')
+print(Style.RESET_ALL)
 sleepTime = float(input("Enter a time scale: "))
 class color:
    def __init__(self, color, deck2=0):
@@ -285,12 +298,16 @@ def printCard(card, print_type='', player=''):
 
     if card.startswith('R'):
         print(Fore.RED + card, end='')
+        
     elif card.startswith('Y'):
         print(Fore.YELLOW + card, end='')
+
     elif card.startswith('G'):
         print(Fore.GREEN + card, end='')
+
     elif card.startswith('B'):
         print(Fore.BLUE + card, end='')
+
     elif card.startswith('cc') or card.startswith('dF'):
         print(Fore.WHITE + card)
 
